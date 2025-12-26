@@ -54,7 +54,7 @@ export default function ContactSection() {
             'Content-Type': 'application/json',
             'X-USER': 'egali-www',
             'X-TOKEN': '103891',
-            'X-API-KEY': '5964b21b384dff04e31adc8f6e9d7c0b' 
+            'X-API-KEY': '' 
           },
           body: JSON.stringify(payload)
         });
