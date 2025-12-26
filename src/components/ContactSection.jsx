@@ -31,13 +31,11 @@ export default function ContactSection() {
   const handleSubmit = async (e) => {
       e.preventDefault();
       setIsSubmitting(true);
-      
-      console.log("--- INICIANDO PROCESSO ---");
 
       try {
 
         const payload = {
-          //operation: "insert",
+          operation: "insert",
           nome: formData.name,
           email: formData.email,
           telefone: formData.phone,
@@ -56,20 +54,17 @@ export default function ContactSection() {
             'Content-Type': 'application/json',
             'X-USER': 'egali-www',
             'X-TOKEN': '103891',
-            'X-API-PASSWORD': 'f053d9b450db6b42acdadd2197b5ed21' 
+            'X-API-KEY': '5964b21b384dff04e31adc8f6e9d7c0b' 
           },
           body: JSON.stringify(payload)
         });
 
-        const serviceResult = await serviceResponse.text();
-        console.log("RESULTADO FINAL:", serviceResult);
-
-        // if (!serviceResponse.ok) {
-        //   throw new Error('Falha no envio final');
-        // }
+        if (!serviceResponse.ok) {
+          throw new Error('Falha no envio final');
+        }
 
         setSubmitStatus('success');
-        // setFormData({ name: '', email: '', phone: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', message: '' });
 
       } catch (error) {
         console.error('ERRO DETALHADO:', error);
