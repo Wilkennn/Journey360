@@ -1,149 +1,223 @@
-<div align="center">
+# 🌍 Journey360 — Landing Page & Lead Integration
 
-# HubMsg Landing Page
+Landing Page desenvolvida com **React (Vite)** e **TailwindCSS**, focada em conversão, captação de leads e integração segura com a **API Hubsys**.
 
-![HubMsg Logo](https://raw.githubusercontent.com/hubsys-io/hub-message-landing-page/refs/heads/main/public/hubsys_favicon.ico?token=GHSAT0AAAAAADBYXUWHYHTABKCJKYBWIUDU2CJ3JTA)
-
-*Transforme seu WhatsApp em uma máquina de vendas com o chatbot inteligente da HubMsg!*
-
-Esta é a landing page oficial da **HubMsg**, desenvolvida para apresentar os recursos e benefícios da nossa plataforma de chatbot inteligente para WhatsApp. Descubra como a HubMsg pode otimizar seu atendimento ao cliente, qualificar leads e fornecer relatórios em tempo real.
-
-</div>
+O projeto foi concebido para atender requisitos de **segurança**, **escalabilidade** e **flexibilidade de deploy**, utilizando uma arquitetura **BFF (Backend-for-Frontend)** para proteger credenciais sensíveis e evitar problemas de CORS.
 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## 🎯 Objetivo do Projeto
 
-Este projeto foi construído com as seguintes tecnologias principais:
-
-* **[React](https://react.dev/)**: Biblioteca JavaScript para construção de interfaces.
-* **[Tailwind CSS](https://tailwindcss.com/)**: Framework CSS utilitário para estilização responsiva rápida.
-* **[Material UI (MUI)](https://mui.com/)**: Componentes React baseados no Material Design do Google.
-* **[Framer Motion](https://www.framer.com/motion/)**: Biblioteca para animações fluidas e declarativas.
-* **[React Router DOM](https://reactrouter.com/en/main)**: Gerenciamento de rotas para SPAs.
-* **[Tippy.js](https://atomiks.github.io/tippyjs/react/)**: Tooltips interativos e acessíveis.
-* **[Swiper](https://swiperjs.com/)**: Slider/carrossel moderno e responsivo.
-* **[React Icons](https://react-icons.github.io/react-icons/)**: Biblioteca de ícones populares em forma de componentes React.
-* **[Vercel Speed Insights](https://vercel.com/docs/concepts/speed-insights)**: Ferramenta de monitoramento de desempenho integrada.
+- Disponibilizar uma landing page moderna e performática
+- Centralizar integrações com a API Hubsys de forma segura
+- Evitar exposição de tokens e credenciais no frontend
+- Permitir deploy tanto em **Serverless** quanto em **VPS**
 
 ---
 
-## 🧱 Estrutura do Projeto
+## 🧠 Arquitetura (BFF)
 
-```bash
-hub-message-landing-page
-├─ package-lock.json          # Arquivo de controle de versões das dependências
-├─ package.json               # Metadados do projeto e lista de dependências
-├─ public                     # Arquivos públicos acessíveis diretamente no navegador
-│  ├─ hubsys_favicon.ico      # Ícone da página
-│  ├─ index.html              # HTML base da aplicação
-│  └─ logo.png                # Logo principal usada na interface
-├─ README.md                  # Documentação principal do projeto
-├─ src                        # Código-fonte da aplicação
-│  ├─ App.js                  # Componente raiz do React
-│  ├─ assets                  # Recursos visuais (ícones, imagens, etc.)
-│  │  ├─ icons                # Ícones utilizados na aplicação
-│  │  │  └─ flags             # Bandeiras de países
-│  │  └─ images               # Imagens diversas da interface
-│  ├─ components              # Componentes reutilizáveis da interface
-│  ├─ data                    # Dados estáticos usados nos componentes
-│  ├─ index.css               # Estilos globais
-│  ├─ index.js                # Ponto de entrada do React DOM
-│  ├─ pages                   # Páginas da aplicação
-│  ├─ routes                  # Arquivo de configuração das rotas
-│  └─ styles                  # Arquivos de estilo adicionais
-└─ tailwind.config.js         # Configuração do Tailwind CSS
+A arquitetura **Backend-for-Frontend** garante que:
+
+- O frontend **nunca** consuma a API Hubsys diretamente
+- As credenciais ficam isoladas no backend
+- Headers sensíveis são tratados apenas no servidor
+- O controle de CORS é totalmente resolvido
+
+Fluxo simplificado:
+
+Frontend (React) → BFF (Node / Serverless) → API Hubsys
+
+---
+
+## 🛠️ Stack Tecnológica
+
+- **Frontend:** React + Vite
+- **Estilização:** TailwindCSS
+- **Backend:** Node.js (Express / Serverless Functions)
+- **Deploy Serverless:** Vercel
+- **Deploy Tradicional:** VPS + PM2 + Nginx
+- **Gerenciamento de Processos:** PM2
+- **Proxy Reverso:** Nginx
+- **SSL:** Certbot (Let's Encrypt)
+
+---
+
+## 🗂️ Estrutura do Projeto
+
+```text
+journey360/
+├── .env                  # Variáveis de ambiente (não versionar)
+├── api/                  # Backend Serverless (Vercel)
+├── dist/                 # Build de produção (React)
+├── public/               # Assets públicos
+├── src/                  # Código-fonte do Frontend
+├── server.js             # Servidor Express (VPS)
+├── vite.config.js        # Proxy local (Dev)
+└── package.json          # Dependências e scripts
 ```
 
 ---
 
-## 💻 Como Executar Localmente
+## 🔑 Variáveis de Ambiente
 
-Siga os passos abaixo para configurar e executar a landing page da HubMsg localmente.
+Crie um arquivo `.env` na raiz do projeto:
 
-### Requisitos
+```env
+# Credenciais Hubsys
+HUBSYS_API_STATIC_USER=seu-usuario
+HUBSYS_API_STATIC_TOKEN=seu-token
+HUBSYS_API_STATIC_PASSWORD=sua-senha-hash
 
-* **Node.js** (recomendado usar a versão LTS)
-* **npm** (Node Package Manager)
-
-> 🔗 [Instalar Node.js](https://nodejs.org/en/download/)
-
-### Instalação
-
-1. **Clone o repositório:**
-
-```bash
-git clone https://github.com/hubsys-io/hub-message-landing-page.git
+# Porta (apenas VPS)
+PORT=3000
 ```
 
-2. **Acesse a pasta do projeto:**
+> ⚠️ **Nunca versionar o arquivo `.env`.**
 
-```bash
-cd hub-message-landing-page
-```
+---
 
-3. **Instale as dependências:**
+## 💻 Rodando Localmente (Desenvolvimento)
 
+### 1️⃣ Instalação de dependências
 ```bash
 npm install
 ```
 
-### Configuração do PostCSS e Tailwind CSS
+### 2️⃣ Configuração do ambiente
+Crie o `.env` conforme descrito acima.
 
-Certifique-se de que o arquivo `postcss.config.js` esteja presente na raiz do projeto:
-
-```javascript
-// postcss.config.js
-module.exports = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-};
-```
-
-E o `tailwind.config.js` deve conter:
-
-```javascript
-// tailwind.config.js
-module.exports = {
-  content: [
-    './src/**/*.{js,jsx,ts,tsx}',
-  ],
-  theme: {
-    extend: {
-      colors: {
-        'custom-green': '#588C3C',
-      },
-    },
-  },
-  plugins: [],
-};
-```
-
-### Executando o Projeto
-
-Para iniciar o servidor de desenvolvimento:
-
+### 3️⃣ Iniciar o servidor
 ```bash
-npm start
+npm run dev
 ```
 
-A aplicação será aberta automaticamente em `http://localhost:3000`.
+A aplicação ficará disponível em:
+👉 **http://localhost:3000**
+
+O Vite utiliza proxy configurado em `vite.config.js`.
 
 ---
 
-## 🛠️ Scripts Disponíveis
+## 🚀 Deploy Serverless — Vercel (Recomendado)
 
-* `npm start`: Inicia o servidor de desenvolvimento.
-* `npm run build`: Gera os arquivos otimizados para produção na pasta `build/`.
-* `npm test`: Executa os testes (Jest).
-* `npm run eject`: Expõe a configuração do React. **(Irreversível!)**
+### Passo a passo:
+1. Faça push do projeto para o GitHub
+2. Importe o repositório na Vercel
+3. Acesse **Settings → Environment Variables**
+4. Cadastre as variáveis:
+   - HUBSYS_API_STATIC_USER
+   - HUBSYS_API_STATIC_TOKEN
+   - HUBSYS_API_STATIC_PASSWORD
+5. Execute o deploy
+
+A Vercel detecta automaticamente a pasta `/api` e cria as rotas serverless.
+
+---
+
+## 🖥️ Deploy em VPS (Node.js + Nginx)
+
+### 1️⃣ Preparação do Servidor
+
+```bash
+sudo apt update
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs nginx
+sudo npm install -g pm2
+```
+
+---
+
+### 2️⃣ Clonagem e Setup
+
+```bash
+git clone https://github.com/seu-usuario/seu-repo.git
+cd seu-repo
+npm install
+nano .env
+```
+
+---
+
+### 3️⃣ Build e Execução
+
+```bash
+npm run build
+pm2 start server.js --name journey360
+pm2 save
+pm2 startup
+```
+
+---
+
+### 4️⃣ Nginx — Proxy Reverso
+
+```bash
+sudo nano /etc/nginx/sites-available/journey360
+```
+
+```nginx
+server {
+    listen 80;
+    server_name seudominio.com.br www.seudominio.com.br;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+```bash
+sudo ln -s /etc/nginx/sites-available/journey360 /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+---
+
+### 5️⃣ SSL (HTTPS)
+
+```bash
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d seudominio.com.br
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### ❌ 403 Forbidden
+- Verifique as credenciais
+- Confirme o ambiente do token (UAT / DSV2)
+
+### ❌ 502 Bad Gateway
+- Verifique o processo Node:
+```bash
+pm2 status
+pm2 logs journey360
+```
+
+### ❌ Headers inválidos
+- Utilize **X-USER** e **X-TOKEN**
+- Não utilize `X-API-USER`
+
+---
+
+## 📈 Boas Práticas
+
+- Nunca exponha tokens no frontend
+- Utilize HTTPS sempre
+- Versione apenas `.env.example`
+- Monitore processos com PM2
 
 ---
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a **Licença MIT**. Veja o arquivo `LICENSE` para mais detalhes.
-
----
+Projeto de uso interno.
+Todos os direitos reservados.

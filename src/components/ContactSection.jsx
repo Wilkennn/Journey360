@@ -23,10 +23,19 @@ export default function ContactSection() {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const maskPhone = (value) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{2})(\d)/, "($1) $2")
+      .replace(/(\d{5})(\d)/, "$1-$2")
+      .replace(/(-\d{4})\d+?$/, "$1");
   };
 
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    if (name === 'phone') value = maskPhone(value);
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
       e.preventDefault();
@@ -47,15 +56,9 @@ export default function ContactSection() {
           origemId: "59"
         };
 
-        const serviceResponse = await fetch('/api-services/services', {
+        const serviceResponse = await fetch('/api/proxy', {
           method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-USER': 'egali-www',
-            'X-TOKEN': '103891',
-            'X-API-KEY': '' 
-          },
+         headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
 
@@ -158,7 +161,9 @@ export default function ContactSection() {
                       <input
                         type="tel"
                         name="phone"
+                        placeholder="(00) 00000-0000" // Placeholder indicativo
                         required
+                        maxLength={15} // Limita o tamanho total caracteres
                         value={formData.phone}
                         onChange={handleChange}
                         disabled={isSubmitting}

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import "../styles/global.css";
 
 import Journey360Hero from "../components/Journey360Hero";
@@ -13,18 +12,7 @@ import TargetAudienceSection from "../components/TargetAudienceSection";
 import ProgramsSection from "../components/ProgramsSection";
 import ContactSection from "../components/ContactSection";
 
-export default Home = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.substring(1);
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, [location.hash]);
+export default function Home () {
 
   return (
     <div className="min-h-screen font-sans text-gray-700 bg-gray-50 overflow-x-hidden">
