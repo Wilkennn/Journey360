@@ -24,7 +24,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
         'X-USER': process.env.HUBSYS_API_STATIC_USER,
         'X-TOKEN': process.env.HUBSYS_API_STATIC_TOKEN,
-        'X-API-PASSWORD': process.env.HUBSYS_API_STATIC_PASSWORD
+        'X-API-KEY': process.env.HUBSYS_API_STATIC_PASSWORD
       },
       body: JSON.stringify(formData)
     });
