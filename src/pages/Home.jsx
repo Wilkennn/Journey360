@@ -1,5 +1,3 @@
-import "../styles/global.css";
-
 import Journey360Hero from "../components/Journey360Hero";
 import Header from "../components/Header";
 import PartnersSection from "../components/PartnersSection";
